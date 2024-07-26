@@ -26,6 +26,8 @@ const SignaturePad = ({
     const sigCanvas = useRef({});
     const [signature, setSignature] = useState(null);
 
+    const [signSuccess, setsignSuccess] = useState(false);
+
     const clear = (e) => {
         e.preventDefault();
         sigCanvas.current.clear();
@@ -88,7 +90,7 @@ const SignaturePad = ({
             userMail: userData.user.Email,
         };
         console.log(pdfBlob);
-        // formData.append("jsonData", JSON.stringify(jsonData));
+        formData.append("jsonData", JSON.stringify(jsonData));
         try {
             console.log(pdf(<PDFDocument signature={signature} />));
             // const response = await axios.post('http://192.168.101.25:1337/api/bahadors', jsonData );
@@ -117,7 +119,7 @@ const SignaturePad = ({
                                 // headers: {
                                 // 'Content-Type': 'application/json'
                                 // },
-                                // body: formData,
+                                body: formData,
                             })
                                 .then(() => {
                                     // setUserData({
@@ -130,7 +132,12 @@ const SignaturePad = ({
                                     setSignature(null);
                                     agreedFunc(false);
                                     submitFunc(false);
-                                    navigate("/");
+                                    setsignSuccess(true);
+                                    // navigate("/");
+                                    setTimeout(() => {
+                                        setsignSuccess(false);
+                                        navigate("/");
+                                    }, 2000);
                                 })
                                 // .then(response => response.json())
                                 // .then(data => {
@@ -152,8 +159,21 @@ const SignaturePad = ({
         }
     };
 
+    function alertSuccess() {
+        return (
+            <div
+                className="p-4 font-bold  mb-4 text-xl text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 fixed w-90 left-1/2 -translate-x-1/2 top-1/3  box-border"
+                role="alert"
+            >
+                <span className="font-medium">Success alert!</span> Change a few
+                things up and try submitting again.
+            </div>
+        );
+    }
+
     return (
         <div>
+            {signSuccess ? alertSuccess() : ""}
             <div className="flex justify-center">
                 <SignatureCanvas
                     ref={sigCanvas}
