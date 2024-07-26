@@ -3,7 +3,7 @@ import AccordionBody from "./AccordionBody";
 import { Link } from "react-router-dom";
 function DocumentPage() {
     return (
-        <div className="mx-auto mt-16 max-w-xl sm:mt-20">
+        <div className="mx-auto mt-16 max-w-xl sm:mt-20 sd:mt-24">
             <div
                 className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
                 aria-hidden="true"
@@ -27,7 +27,7 @@ function DocumentPage() {
                 <button
                     className={`block w-44 rounded-md  bg-indigo-600 mx-auto   px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm bg-indigo-500  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-indigo-600  cursor-pointer mt-10`}
                 >
-                    Подписать
+                    Прочесть документ
                 </button>
             </Link>
         </div>

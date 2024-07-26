@@ -10,7 +10,7 @@ import { PDFDownloadLink, pdf } from "@react-pdf/renderer";
 import PDFDocument from "./PDFDoc";
 import userData from "../../store/userData";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 import "./SignaturePad.css";
 
 const SignaturePad = ({
@@ -22,6 +22,7 @@ const SignaturePad = ({
     submitFunc,
     setUserData,
 }) => {
+    const navigate = useNavigate();
     const sigCanvas = useRef({});
     const [signature, setSignature] = useState(null);
 
@@ -78,41 +79,37 @@ const SignaturePad = ({
         ).toBlob();
 
         const formData = new FormData();
-        formData.append(
-            "files",
-            pdfBlob,
-            `${userData.user.surName}-${userData.user.surName}.pdf`
-        );
+        formData.append("files", pdfBlob, `${userData.user.fio.trim()}.pdf`);
 
         const jsonData = {
-            userName: userData.user.surName,
-            cardModel: userData.user.cardModel,
-            userSide: userData.user.userSide,
-            userSurname: userData.user.surName,
+            userName: userData.user.fio,
+            userSide: userData.user.iin,
+            userSurname: userData.user.data,
             userMail: userData.user.Email,
         };
         console.log(pdfBlob);
-        formData.append("jsonData", JSON.stringify(jsonData));
+        // formData.append("jsonData", JSON.stringify(jsonData));
         try {
             console.log(pdf(<PDFDocument signature={signature} />));
             // const response = await axios.post('http://192.168.101.25:1337/api/bahadors', jsonData );
             axios
-                .post("http://192.168.101.25:1337/api/upload/", formData)
+                .post("http://localhost:1337/api/upload/", formData)
                 .then((res) => {
                     const fileId = res.data[0].id;
                     console.log(jsonData);
                     axios
-                        .post(`http://192.168.101.25:1337/api/kartridzhis`, {
-                            data: {
-                                userName: userData.user.surName,
-                                cardModel: userData.user.cardModel,
-                                userSide: userData.user.userSide,
-                                userSurname: userData.user.surName,
-                                userMail: userData.user.Email,
-                                cardCount: userData.user.cardCount,
-                                userSign: fileId,
-                            },
-                        })
+                        .post(
+                            `http://localhost:1337/api/podpisannye-dokumenties`,
+                            {
+                                data: {
+                                    userName: userData.user.fio,
+                                    userTName: userData.user.iin,
+                                    userSecondName: userData.user.data,
+                                    userEmail: userData.user.Email,
+                                    userDoc: fileId,
+                                },
+                            }
+                        )
                         .then((e) => {
                             console.log(jsonData);
                             fetch("http://192.168.101.25:3001/send", {
@@ -120,21 +117,20 @@ const SignaturePad = ({
                                 // headers: {
                                 // 'Content-Type': 'application/json'
                                 // },
-                                body: formData,
+                                // body: formData,
                             })
                                 .then(() => {
-                                    setUserData({
-                                        name: "",
-                                        surName: "",
-                                        userSide: "",
-                                        Email: "",
-                                        cardModel: "",
-                                        cardCount: "",
-                                    });
+                                    // setUserData({
+                                    //     name: "",
+                                    //     surName: "",
+                                    //     userSide: "",
+                                    //     Email: "",
+                                    // });
                                     sigCanvas.current.clear();
                                     setSignature(null);
                                     agreedFunc(false);
                                     submitFunc(false);
+                                    navigate("/");
                                 })
                                 // .then(response => response.json())
                                 // .then(data => {
@@ -161,7 +157,7 @@ const SignaturePad = ({
             <div className="flex justify-center">
                 <SignatureCanvas
                     ref={sigCanvas}
-                    penColor="black"
+                    penColor="blue"
                     canvasProps={{
                         width: "300px",
                         height: "140px",

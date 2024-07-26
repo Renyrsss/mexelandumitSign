@@ -7,18 +7,22 @@ export default function Example() {
     const navigate = useNavigate();
     let [alertState, setalertState] = useState(false);
     const [usersData, setUserData] = useState({
-        name: "",
-        surName: "",
-        thirthName: "",
+        fio: "",
+        data: "",
+        iin: "",
+        adress: "",
+        phone: "",
         Email: "",
     });
 
     function validateData() {
         if (
-            usersData.name.trim() &&
-            usersData.surName.trim() &&
-            usersData.thirthName.trim() &&
-            usersData.Email.trim()
+            usersData.fio.trim() &&
+            usersData.data.trim() &&
+            usersData.iin.trim() &&
+            usersData.adress.trim() &&
+            usersData.phone.trim() &&
+            usersData.Email.trim().includes("@")
         ) {
             console.log("enter the field");
             navigate("/Document");
@@ -33,11 +37,14 @@ export default function Example() {
     function alertBox() {
         return (
             <div
-                class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 fixed w-90 left-1/2 -translate-x-1/2 top-1/3  box-border "
+                className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 fixed w-90 left-1/2 -translate-x-1/2 top-1/3  box-border "
                 role="alert"
             >
-                <p class="font-medium text-center">
-                    Пожалуйста заполните все поля{" "}
+                <p className="font-medium text-center">
+                    {/* Пожалуйста заполните все поля{" "} */}
+                    {usersData.Email.trim().includes("@")
+                        ? "Пожалуйста заполните все поля "
+                        : "Введите корректные данные почты "}
                 </p>{" "}
             </div>
         );
@@ -65,9 +72,7 @@ export default function Example() {
                 <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                     Подпишите документ
                 </h2>
-                <p className="mt-2 text-lg leading-8 text-gray-600">
-                    от администратора для сотрудников
-                </p>
+                <p className="mt-2 text-lg leading-8 text-gray-600"></p>
             </div>
             <form
                 action="#"
@@ -80,17 +85,17 @@ export default function Example() {
                             htmlFor="first-name"
                             className="block text-sm font-semibold leading-6 text-gray-900"
                         >
-                            Имя
+                            ФИО
                         </label>
                         <div className="mt-2.5">
                             <input
                                 onChange={(e) => {
                                     setUserData({
                                         ...usersData,
-                                        name: e.target.value,
+                                        fio: e.target.value,
                                     });
                                 }}
-                                value={usersData.name}
+                                value={usersData.fio}
                                 type="text"
                                 name="first-name"
                                 id="first-name"
@@ -104,17 +109,68 @@ export default function Example() {
                             htmlFor="last-name"
                             className="block text-sm font-semibold leading-6 text-gray-900"
                         >
-                            Фамилия
+                            Дата рождения
                         </label>
                         <div className="mt-2.5">
                             <input
                                 onChange={(e) => {
                                     setUserData({
                                         ...usersData,
-                                        surName: e.target.value,
+                                        data: e.target.value,
                                     });
                                 }}
-                                value={usersData.surName}
+                                value={usersData.data}
+                                type="text"
+                                name="last-name"
+                                id="last-name"
+                                autoComplete="family-name"
+                                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2  mb-6">
+                    <div>
+                        <label
+                            htmlFor="first-name"
+                            className="block text-sm font-semibold leading-6 text-gray-900"
+                        >
+                            ИИН
+                        </label>
+                        <div className="mt-2.5">
+                            <input
+                                onChange={(e) => {
+                                    setUserData({
+                                        ...usersData,
+                                        iin: e.target.value,
+                                    });
+                                }}
+                                value={usersData.iin}
+                                type="text"
+                                name="first-name"
+                                id="first-name"
+                                autoComplete="given-name"
+                                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <label
+                            htmlFor="last-name"
+                            className="block text-sm font-semibold leading-6 text-gray-900"
+                        >
+                            Адрес
+                        </label>
+                        <div className="mt-2.5">
+                            <input
+                                onChange={(e) => {
+                                    setUserData({
+                                        ...usersData,
+                                        adress: e.target.value,
+                                    });
+                                }}
+                                value={usersData.adress}
                                 type="text"
                                 name="last-name"
                                 id="last-name"
@@ -130,17 +186,17 @@ export default function Example() {
                             htmlFor="first-name"
                             className="block text-sm font-semibold leading-6 text-gray-900"
                         >
-                            Очество
+                            Телефон
                         </label>
                         <div className="mt-2.5">
                             <input
                                 onChange={(e) => {
                                     setUserData({
                                         ...usersData,
-                                        thirthName: e.target.value,
+                                        phone: e.target.value,
                                     });
                                 }}
-                                value={usersData.thirthName}
+                                value={usersData.phone}
                                 type="text"
                                 name="first-name"
                                 id="first-name"
