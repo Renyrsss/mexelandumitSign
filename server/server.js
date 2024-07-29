@@ -43,7 +43,7 @@ app.post("/send", upload.single("files"), (req, res) => {
     let mailOptions = {
         from: "tomosign@tomo.kz",
         to: jsonData.userMail,
-        subject: `new massage for  `,
+        subject: `new message for  `,
         text: `hello this is massage for`,
         attachments: [
             {

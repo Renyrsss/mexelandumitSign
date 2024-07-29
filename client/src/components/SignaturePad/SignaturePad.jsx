@@ -114,7 +114,7 @@ const SignaturePad = ({
                         )
                         .then((e) => {
                             console.log(jsonData);
-                            fetch("http://192.168.101.25:3001/send", {
+                            fetch("http://localhost:3001/send", {
                                 method: "POST",
                                 // headers: {
                                 // 'Content-Type': 'application/json'
@@ -165,8 +165,8 @@ const SignaturePad = ({
                 className="p-4 font-bold  mb-4 text-xl text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 fixed w-90 left-1/2 -translate-x-1/2 top-1/3  box-border"
                 role="alert"
             >
-                <span className="font-medium">Success alert!</span> Change a few
-                things up and try submitting again.
+                <span className="font-medium">Документ подписан.</span> Копия
+                документа отправлено вам на почту .
             </div>
         );
     }
