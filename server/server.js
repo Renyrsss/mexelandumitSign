@@ -4,7 +4,7 @@ const multer = require("multer");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
-const port = 3001; // или любой другой порт
+const port = 3003; // или любой другой порт
 
 app.use(cors());
 app.use(bodyParser.json());
